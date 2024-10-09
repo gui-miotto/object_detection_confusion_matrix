@@ -56,7 +56,7 @@ class ObjectDetectionConfusionMatrix(MulticlassConfusionMatrix):
             expd_pred_labels.append(torch.tensor(n_fnegatives * [self.background_id], device=dev))
             expd_target_labels.append(target["labels"][false_negatives])
         # False positives:
-        false_positive_ids = set(range(len(preds["labels"]))) - set(matched_preds.numpy())
+        false_positive_ids = set(range(len(preds["labels"]))) - set(matched_preds.cpu().numpy())
         n_fpositives = len(false_positive_ids)
         if n_fpositives:
             expd_pred_labels.append(preds["labels"][torch.tensor(tuple(false_positive_ids))])
